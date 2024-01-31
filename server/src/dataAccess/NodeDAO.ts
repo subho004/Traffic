@@ -14,7 +14,6 @@ class NodeDAO {
       let minDistance = Infinity;
 
       for (const node of nodes) {
-        // Parent and child cannot have the same longitude
         if (node.longitude !== newNode.longitude && node.children.length < 2) {
           const distance = this.euclideanDistance(
             newNode.latitude,
@@ -23,7 +22,7 @@ class NodeDAO {
             node.longitude
           );
           if (distance < minDistance) {
-            closestParent = node as NodeDocument; // Cast node to NodeDocument
+            closestParent = node as NodeDocument;
             minDistance = distance;
           }
         }
@@ -58,11 +57,9 @@ class NodeDAO {
         const currentChild = await NodeModel.findById(currentChildId).exec();
 
         if (currentChild) {
-          // Update the functional value
           currentChild.functional = !currentChild.functional;
           await currentChild.save();
 
-          // Add current child's children to the queue
           queue.push(...currentChild.children);
         }
       }
@@ -86,7 +83,6 @@ class NodeDAO {
 
   async addNode(node: Node): Promise<Node> {
     try {
-      // If the database is not empty, get the last node and increment the name for the new node
       if ((await NodeModel.countDocuments({})) > 0) {
         const lastNode = await NodeModel.findOne()
           .sort({ name: -1 })
@@ -97,11 +93,9 @@ class NodeDAO {
         }
       }
 
-      // If the database is empty, set the parent to null
       if ((await NodeModel.countDocuments({})) === 0) {
         node.parent = null;
       } else {
-        // If the database is not empty, find the nearest parent and update the children
         const closestParent = await this.findClosestParent(node);
         if (closestParent) {
           node.parent = closestParent.name;
@@ -110,7 +104,6 @@ class NodeDAO {
         }
       }
 
-      // Create the new node in the database
       const createdNode = await NodeModel.create(node);
       return createdNode.toObject() as Node;
     } catch (error) {
@@ -120,11 +113,9 @@ class NodeDAO {
 
   async updateNode(nodeName: number): Promise<Node | null> {
     try {
-      // Find the node by name
       const nodeToUpdate = await NodeModel.findOne({ name: nodeName }).exec();
 
       if (nodeToUpdate) {
-        // Update the node itself
         nodeToUpdate.functional = !nodeToUpdate.functional;
         await nodeToUpdate.save();
 
@@ -142,8 +133,6 @@ class NodeDAO {
       throw new Error(`Error updating node: ${error}`);
     }
   }
-
-  // Additional MongoDB operations as needed
 }
 
 export default NodeDAO.getInstance();

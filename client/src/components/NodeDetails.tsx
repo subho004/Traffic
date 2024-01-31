@@ -1,5 +1,5 @@
 import React from "react";
-import Modal from "react-modal"; // Make sure to install this dependency
+import Modal from "react-modal";
 
 interface NodeDetailsProps {
   isOpen: boolean;

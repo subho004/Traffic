@@ -1,5 +1,3 @@
-// src/App.tsx
-
 import React from "react";
 import NodeTree from "./components/NodeTree";
 import "./App.scss";

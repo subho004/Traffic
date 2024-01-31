@@ -17,12 +17,10 @@ const NodeApiService = {
 
   addNode: async (newNodeData: any) => {
     try {
-      // Ensure that the provided newNodeData is an object
       if (typeof newNodeData !== "object" || newNodeData === null) {
         throw new Error("Invalid node data format");
       }
 
-      // Make the API call with the newNodeData
       const response = await axios.post(`${BASE_URL}/nodes`, newNodeData, {
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +42,6 @@ const NodeApiService = {
     }
   },
 
-  // Helper function to serialize NodeDocument to a plain JavaScript object
   serializeNode: (node: NodeDocument) => {
     return node.toObject();
   },

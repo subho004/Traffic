@@ -1,5 +1,3 @@
-// src/services/SocketService.ts
-
 import { io } from "socket.io-client";
 
 const SOCKET_URL = "http://localhost:8000";
@@ -14,8 +12,6 @@ const SocketService = {
   onNodeUpdated: (callback: (node: any) => void) => {
     socket.on("nodeUpdated", callback);
   },
-
-  // You can add more socket event handlers as needed
 
   disconnect: () => {
     socket.disconnect();
