@@ -1,0 +1,19 @@
+.node-tree-container {
+  width: 100%;
+  /* Adjust the maximum width as needed */
+  height: 100vh;
+  margin-top: 20px; /* Add some margin from the top */
+  .node__red > circle {
+    fill: red;
+  }
+
+  .node__green > circle {
+    fill: green;
+  }
+  .node-functional > circle {
+    fill: green;
+  }
+  .node-non-functional > circle {
+    fill: red;
+  }
+}
